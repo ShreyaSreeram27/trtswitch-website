@@ -1,64 +1,207 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ page.title | default: site.title }}</title>
-    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
-</head>
-<body>
-    <!-- Header Section -->
-    <header class="site-header">
-    <div class="hero-section">
-        <div class="hero-content">
-            <div class="hero-header">
-    <a href="https://www.gene.com/about-us" target="_blank" rel="noopener noreferrer" class="logo-link">
-        <img src="{{ '/genentech_logo.png' | relative_url }}" 
-             alt="Genentech - A Member of the Roche Group" 
-             class="sponsor-logo">
-    </a>
-    <div class="hero-text">
-        <h1>ASA Biopharmaceutical Section</h1>
-        <h2>Oncology Treatment Switch Workstream</h2>
-    </div>
+---
+layout: default
+title: Home
+---
+
+# Oncology Treatment Switch Workstream
+
+This workstream addresses a major challenge in oncology clinical trials: the impact of treatment switching on long-term outcomes. We develop, validate, and promote statistical methods that properly adjust for treatment switching while maintaining scientific rigor.
+
+## Overview
+
+When patients switch from their assigned treatment to another therapy (often due to disease progression or safety concerns), traditional intent-to-treat analyses may not provide the most relevant estimates of treatment efficacy. Our workstream tackles this challenge through:
+
+<div class="card-grid">
+  <div class="card">
+    <h3><i class="fas fa-calculator"></i> Statistical Methods</h3>
+    <p>Development of advanced statistical approaches including RPSFT, IPE, IPCW, TSE, and MSM methods for handling treatment switching scenarios.</p>
+  </div>
+  
+  <div class="card">
+    <h3><i class="fas fa-check-circle"></i> Rigorous Validation</h3>
+    <p>Comprehensive validation studies ensuring our methods produce reliable, accurate results across multiple datasets and scenarios.</p>
+  </div>
+  
+  <div class="card">
+    <h3><i class="fas fa-code"></i> Open Source Tools</h3>
+    <p>Development of the trtswitch R package - a comprehensive, validated toolkit for treatment switching analysis.</p>
+  </div>
+  
+  <div class="card">
+    <h3><i class="fas fa-users"></i> Collaboration</h3>
+    <p>Bringing together statisticians, clinicians, and regulatory experts to advance the science of treatment switching.</p>
+  </div>
 </div>
-    
-    <!-- Navigation Menu -->
-    <nav class="site-nav">
-        <div class="nav-container">
-            <a href="{{ '/' | relative_url }}">Home</a>
-            <a href="{{ '/objectives' | relative_url }}">Objectives</a>
-            <div class="dropdown">
-                <a href="{{ '/methods' | relative_url }}">Methods ▼</a>
-                <div class="dropdown-content">
-                    <a href="{{ '/methods#rpsft' | relative_url }}">RPSFT</a>
-                    <a href="{{ '/methods#ipe' | relative_url }}">IPE</a>
-                    <a href="{{ '/methods#ipcw' | relative_url }}">IPCW</a>
-                    <a href="{{ '/methods#tse' | relative_url }}">TSE</a>
-                    <a href="{{ '/methods#msm' | relative_url }}">MSM</a>
-                    <a href="{{ '/methods#validation' | relative_url }}">Validation</a>
-                </div>
-            </div>
-            <a href="{{ '/resources' | relative_url }}">Resources</a>
-        </div>
-    </nav>
-</header>
 
-    <!-- Main Content Area -->
-    <main class="page-content">
-        <div class="wrapper">
-            {{ content }}
-        </div>
-    </main>
+## Recent Achievements
 
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="wrapper">
-            <p>&copy; {{ 'now' | date: '%Y' }} ASA Biopharmaceutical Section - Oncology Treatment Switch Workstream</p>
-        </div>
-    </footer>
+### Test 6 Validation Completed
+**June 2025** - Our latest validation study demonstrates excellent agreement between `trtswitch::rpsftm()` and reference implementations:
 
-    <!-- JavaScript for interactive features -->
-    <script src="{{ '/assets/js/main.js' | relative_url }}"></script>
-</body>
-</html>
+- **psi parameter:** Difference < 0.02%
+- **Hazard ratios:** Agreement to 4 decimal places  
+- **p-values:** Within 0.004 units
+- **Event indicators:** 100% concordance
+
+### Cross-Dataset Validation Framework
+**May 2025** - Established comprehensive validation approach across multiple datasets (shilong and immdef), strengthening confidence in our methodological implementations.
+
+### Two-Way Switch Investigation
+**April 2025** - Identified areas for improvement in two-way switching scenarios, enhancing our understanding of method limitations and future development needs.
+
+## trtswitch R Package
+
+Our flagship deliverable is a comprehensive R package that provides validated implementations of multiple treatment switching methods.
+
+### Installation
+
+```r
+# Install from GitHub
+devtools::install_github("ShreyaSreeram27/trtswitch")
+
+# Load the package
+library(trtswitch)
+
+# Explore example datasets
+data(shilong)
+data(immdef)
+```
+
+### Key Features
+
+- **RPSFT Implementation:** Rank Preserving Structural Failure Time models
+- **IPE Methods:** Iterative Parameter Estimation with flexible distributions
+- **Comprehensive Validation:** Tested against reference implementations
+- **Bootstrap Support:** Confidence intervals and uncertainty quantification
+- **Multiple Datasets:** Built-in examples for learning and testing
+
+### Quick Example
+
+```r
+# Basic RPSFT analysis
+fit <- trtswitch::rpsftm(
+  data = shilong,
+  id = "id", 
+  time = "survtime", 
+  event = "event",
+  treat = "arm", 
+  rx = "switch_proportion"
+)
+
+# View results
+summary(fit)
+```
+
+## Validation Results Summary
+
+Our validation studies demonstrate the reliability and accuracy of our implementations:
+
+<div class="card">
+  <h3>Validation Summary</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Method</th>
+        <th>Dataset</th>
+        <th>psi Agreement</th>
+        <th>HR Agreement</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>RPSFT One-way</strong></td>
+        <td>shilong</td>
+        <td>0.0002</td>
+        <td>4 decimal places</td>
+        <td>✅ Validated</td>
+      </tr>
+      <tr>
+        <td><strong>RPSFT One-way</strong></td>
+        <td>immdef</td>
+        <td>0.0002</td>
+        <td>4 decimal places</td>
+        <td>✅ Validated</td>
+      </tr>
+      <tr>
+        <td><strong>IPE</strong></td>
+        <td>shilong</td>
+        <td>&lt; 0.001</td>
+        <td>Excellent</td>
+        <td>✅ Validated</td>
+      </tr>
+      <tr>
+        <td><strong>IPE</strong></td>
+        <td>immdef</td>
+        <td>&lt; 0.001</td>
+        <td>Excellent</td>
+        <td>✅ Validated</td>
+      </tr>
+      <tr>
+        <td><strong>RPSFT Two-way</strong></td>
+        <td>shilong</td>
+        <td>Similar</td>
+        <td>Under review</td>
+        <td>⚠️ In Progress</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## Why This Matters
+
+### For the Statistical Community
+- **Validated Tools:** Reliable, tested implementations of complex methods
+- **Open Source:** Transparent, auditable code with comprehensive documentation
+- **Best Practices:** Established guidelines for treatment switching analysis
+
+### For Clinical Researchers
+- **Better Estimates:** More appropriate efficacy estimates when switching occurs
+- **Regulatory Clarity:** Methods aligned with regulatory guidance and expectations
+- **Practical Tools:** Easy-to-use software with clear documentation
+
+### For Regulatory Science
+- **Robust Methods:** Statistically sound approaches for complex scenarios
+- **Validation Evidence:** Comprehensive testing demonstrating method reliability
+- **Collaborative Development:** Input from statistical, clinical, and regulatory experts
+
+## Get Involved
+
+We welcome collaboration from statisticians, clinicians, and regulatory scientists:
+
+<div class="card-grid">
+  <div class="card">
+    <h3><i class="fas fa-chart-line"></i> For Statisticians</h3>
+    <p>Review our validation studies, test the package on your datasets, contribute to methodology development, and report bugs or suggestions.</p>
+    <a href="https://github.com/ShreyaSreeram27/trtswitch" class="btn">
+      <i class="fab fa-github"></i> Contribute on GitHub
+    </a>
+  </div>
+  
+  <div class="card">
+    <h3><i class="fas fa-stethoscope"></i> For Clinicians</h3>
+    <p>Share real-world treatment switching scenarios, provide clinical context, and participate in case study development.</p>
+    <a href="mailto:workstream@asabiop.org" class="btn">
+      <i class="fas fa-envelope"></i> Contact Us
+    </a>
+  </div>
+  
+  <div class="card">
+    <h3><i class="fas fa-balance-scale"></i> For Regulatory Scientists</h3>
+    <p>Review guidance documents, provide regulatory feedback, and share agency perspectives on treatment switching methods.</p>
+    <a href="mailto:workstream@asabiop.org" class="btn">
+      <i class="fas fa-handshake"></i> Collaborate
+    </a>
+  </div>
+</div>
+
+## Upcoming Work
+
+- **July 2025:** Bootstrap confidence interval validation
+- **August 2025:** Regulatory guidance document draft  
+- **September 2025:** ASA BIOP webinar presentation
+- **Q4 2025:** IPCW and TSE method implementations
+
+---
+
+*Join
