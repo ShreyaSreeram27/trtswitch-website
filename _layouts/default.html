@@ -1,207 +1,197 @@
----
-layout: default
-title: Home
----
-
-# Oncology Treatment Switch Workstream
-
-This workstream addresses a major challenge in oncology clinical trials: the impact of treatment switching on long-term outcomes. We develop, validate, and promote statistical methods that properly adjust for treatment switching while maintaining scientific rigor.
-
-## Overview
-
-When patients switch from their assigned treatment to another therapy (often due to disease progression or safety concerns), traditional intent-to-treat analyses may not provide the most relevant estimates of treatment efficacy. Our workstream tackles this challenge through:
-
-<div class="card-grid">
-  <div class="card">
-    <h3><i class="fas fa-calculator"></i> Statistical Methods</h3>
-    <p>Development of advanced statistical approaches including RPSFT, IPE, IPCW, TSE, and MSM methods for handling treatment switching scenarios.</p>
-  </div>
-  
-  <div class="card">
-    <h3><i class="fas fa-check-circle"></i> Rigorous Validation</h3>
-    <p>Comprehensive validation studies ensuring our methods produce reliable, accurate results across multiple datasets and scenarios.</p>
-  </div>
-  
-  <div class="card">
-    <h3><i class="fas fa-code"></i> Open Source Tools</h3>
-    <p>Development of the trtswitch R package - a comprehensive, validated toolkit for treatment switching analysis.</p>
-  </div>
-  
-  <div class="card">
-    <h3><i class="fas fa-users"></i> Collaboration</h3>
-    <p>Bringing together statisticians, clinicians, and regulatory experts to advance the science of treatment switching.</p>
-  </div>
-</div>
-
-## Recent Achievements
-
-### Test 6 Validation Completed
-**June 2025** - Our latest validation study demonstrates excellent agreement between `trtswitch::rpsftm()` and reference implementations:
-
-- **psi parameter:** Difference < 0.02%
-- **Hazard ratios:** Agreement to 4 decimal places  
-- **p-values:** Within 0.004 units
-- **Event indicators:** 100% concordance
-
-### Cross-Dataset Validation Framework
-**May 2025** - Established comprehensive validation approach across multiple datasets (shilong and immdef), strengthening confidence in our methodological implementations.
-
-### Two-Way Switch Investigation
-**April 2025** - Identified areas for improvement in two-way switching scenarios, enhancing our understanding of method limitations and future development needs.
-
-## trtswitch R Package
-
-Our flagship deliverable is a comprehensive R package that provides validated implementations of multiple treatment switching methods.
-
-### Installation
-
-```r
-# Install from GitHub
-devtools::install_github("ShreyaSreeram27/trtswitch")
-
-# Load the package
-library(trtswitch)
-
-# Explore example datasets
-data(shilong)
-data(immdef)
-```
-
-### Key Features
-
-- **RPSFT Implementation:** Rank Preserving Structural Failure Time models
-- **IPE Methods:** Iterative Parameter Estimation with flexible distributions
-- **Comprehensive Validation:** Tested against reference implementations
-- **Bootstrap Support:** Confidence intervals and uncertainty quantification
-- **Multiple Datasets:** Built-in examples for learning and testing
-
-### Quick Example
-
-```r
-# Basic RPSFT analysis
-fit <- trtswitch::rpsftm(
-  data = shilong,
-  id = "id", 
-  time = "survtime", 
-  event = "event",
-  treat = "arm", 
-  rx = "switch_proportion"
-)
-
-# View results
-summary(fit)
-```
-
-## Validation Results Summary
-
-Our validation studies demonstrate the reliability and accuracy of our implementations:
-
-<div class="card">
-  <h3>Validation Summary</h3>
-  <table>
-    <thead>
-      <tr>
-        <th>Method</th>
-        <th>Dataset</th>
-        <th>psi Agreement</th>
-        <th>HR Agreement</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><strong>RPSFT One-way</strong></td>
-        <td>shilong</td>
-        <td>0.0002</td>
-        <td>4 decimal places</td>
-        <td>✅ Validated</td>
-      </tr>
-      <tr>
-        <td><strong>RPSFT One-way</strong></td>
-        <td>immdef</td>
-        <td>0.0002</td>
-        <td>4 decimal places</td>
-        <td>✅ Validated</td>
-      </tr>
-      <tr>
-        <td><strong>IPE</strong></td>
-        <td>shilong</td>
-        <td>&lt; 0.001</td>
-        <td>Excellent</td>
-        <td>✅ Validated</td>
-      </tr>
-      <tr>
-        <td><strong>IPE</strong></td>
-        <td>immdef</td>
-        <td>&lt; 0.001</td>
-        <td>Excellent</td>
-        <td>✅ Validated</td>
-      </tr>
-      <tr>
-        <td><strong>RPSFT Two-way</strong></td>
-        <td>shilong</td>
-        <td>Similar</td>
-        <td>Under review</td>
-        <td>⚠️ In Progress</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-## Why This Matters
-
-### For the Statistical Community
-- **Validated Tools:** Reliable, tested implementations of complex methods
-- **Open Source:** Transparent, auditable code with comprehensive documentation
-- **Best Practices:** Established guidelines for treatment switching analysis
-
-### For Clinical Researchers
-- **Better Estimates:** More appropriate efficacy estimates when switching occurs
-- **Regulatory Clarity:** Methods aligned with regulatory guidance and expectations
-- **Practical Tools:** Easy-to-use software with clear documentation
-
-### For Regulatory Science
-- **Robust Methods:** Statistically sound approaches for complex scenarios
-- **Validation Evidence:** Comprehensive testing demonstrating method reliability
-- **Collaborative Development:** Input from statistical, clinical, and regulatory experts
-
-## Get Involved
-
-We welcome collaboration from statisticians, clinicians, and regulatory scientists:
-
-<div class="card-grid">
-  <div class="card">
-    <h3><i class="fas fa-chart-line"></i> For Statisticians</h3>
-    <p>Review our validation studies, test the package on your datasets, contribute to methodology development, and report bugs or suggestions.</p>
-    <a href="https://github.com/ShreyaSreeram27/trtswitch" class="btn">
-      <i class="fab fa-github"></i> Contribute on GitHub
-    </a>
-  </div>
-  
-  <div class="card">
-    <h3><i class="fas fa-stethoscope"></i> For Clinicians</h3>
-    <p>Share real-world treatment switching scenarios, provide clinical context, and participate in case study development.</p>
-    <a href="mailto:workstream@asabiop.org" class="btn">
-      <i class="fas fa-envelope"></i> Contact Us
-    </a>
-  </div>
-  
-  <div class="card">
-    <h3><i class="fas fa-balance-scale"></i> For Regulatory Scientists</h3>
-    <p>Review guidance documents, provide regulatory feedback, and share agency perspectives on treatment switching methods.</p>
-    <a href="mailto:workstream@asabiop.org" class="btn">
-      <i class="fas fa-handshake"></i> Collaborate
-    </a>
-  </div>
-</div>
-
-## Upcoming Work
-
-- **July 2025:** Bootstrap confidence interval validation
-- **August 2025:** Regulatory guidance document draft  
-- **September 2025:** ASA BIOP webinar presentation
-- **Q4 2025:** IPCW and TSE method implementations
-
----
-
-*Join
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page.title | default: site.title }}</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+    <!-- Mobile menu toggle -->
+    <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <!-- Logo and Organization -->
+        <div class="sidebar-header">
+            <a href="https://www.gene.com/about-us" target="_blank" rel="noopener noreferrer" class="logo-container">
+                <img src="{{ '/genentech_logo.png' | relative_url }}" alt="Genentech Logo" class="sidebar-logo">
+            </a>
+            
+            <div class="org-info">
+                <h1 class="org-title">ASA Biopharmaceutical Section</h1>
+                <h2 class="workstream-title">Treatment Switch Workstream</h2>
+                <p class="workstream-subtitle">Statistical Methods for Oncology Clinical Trials</p>
+            </div>
+        </div>
+        
+        <!-- Navigation Menu -->
+        <div class="sidebar-nav">
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="{{ '/' | relative_url }}" class="nav-link {% if page.url == '/' %}active{% endif %}">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="{{ '/objectives' | relative_url }}" class="nav-link {% if page.url contains 'objectives' %}active{% endif %}">
+                        <i class="fas fa-bullseye"></i>
+                        <span>Objectives</span>
+                    </a>
+                </li>
+                
+                <li class="nav-item nav-dropdown">
+                    <a href="{{ '/methods' | relative_url }}" class="nav-link {% if page.url contains 'methods' %}active{% endif %}">
+                        <i class="fas fa-calculator"></i>
+                        <span>Methods</span>
+                        <i class="fas fa-chevron-down dropdown-arrow"></i>
+                    </a>
+                    <ul class="nav-dropdown-menu">
+                        <li><a href="{{ '/methods#rpsft' | relative_url }}">RPSFT</a></li>
+                        <li><a href="{{ '/methods#ipe' | relative_url }}">IPE</a></li>
+                        <li><a href="{{ '/methods#ipcw' | relative_url }}">IPCW</a></li>
+                        <li><a href="{{ '/methods#tse' | relative_url }}">TSE</a></li>
+                        <li><a href="{{ '/methods#msm' | relative_url }}">MSM</a></li>
+                        <li><a href="{{ '/methods#validation' | relative_url }}">Validation</a></li>
+                    </ul>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="{{ '/validation-results' | relative_url }}" class="nav-link {% if page.url contains 'validation' %}active{% endif %}">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Validation Results</span>
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="{{ '/resources' | relative_url }}" class="nav-link {% if page.url contains 'resources' %}active{% endif %}">
+                        <i class="fas fa-book"></i>
+                        <span>Resources</span>
+                    </a>
+                </li>
+                
+                <li class="nav-item">
+                    <a href="https://github.com/ShreyaSreeram27/trtswitch" target="_blank" class="nav-link external">
+                        <i class="fab fa-github"></i>
+                        <span>R Package</span>
+                        <i class="fas fa-external-link-alt external-icon"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="sidebar-stats">
+            <h3>Package Status</h3>
+            <div class="stat-grid">
+                <div class="stat-item">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Methods</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Validated</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">Datasets</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">0.02%</div>
+                    <div class="stat-label">Max Error</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contact Info -->
+        <div class="sidebar-contact">
+            <h3>Contact</h3>
+            <div class="contact-info">
+                <p><i class="fas fa-envelope"></i> workstream@asabiop.org</p>
+                <p><i class="fas fa-globe"></i> ASA Biopharmaceutical Section</p>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="sidebar-footer">
+            <p>&copy; {{ 'now' | date: '%Y' }} ASA BIOP</p>
+            <p>Treatment Switch Workstream</p>
+        </div>
+    </nav>
+    
+    <!-- Main content area -->
+    <main class="main-content">
+        <div class="content-wrapper">
+            {{ content }}
+        </div>
+    </main>
+    
+    <!-- Overlay for mobile -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        const mobileToggle = document.getElementById('mobile-menu-toggle');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        
+        mobileToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('sidebar-open');
+            overlay.classList.toggle('overlay-active');
+        });
+        
+        overlay.addEventListener('click', function() {
+            sidebar.classList.remove('sidebar-open');
+            overlay.classList.remove('overlay-active');
+        });
+        
+        // Dropdown menu toggle
+        const dropdownItems = document.querySelectorAll('.nav-dropdown');
+        dropdownItems.forEach(item => {
+            const link = item.querySelector('.nav-link');
+            const menu = item.querySelector('.nav-dropdown-menu');
+            
+            link.addEventListener('click', function(e) {
+                if (window.innerWidth <= 768) {
+                    e.preventDefault();
+                    item.classList.toggle('dropdown-open');
+                }
+            });
+        });
+        
+        // Close mobile menu when clicking nav links
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.remove('sidebar-open');
+                    overlay.classList.remove('overlay-active');
+                }
+            });
+        });
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                sidebar.classList.remove('sidebar-open');
+                overlay.classList.remove('overlay-active');
+            }
+        });
+    </script>
+</body>
+</html>
